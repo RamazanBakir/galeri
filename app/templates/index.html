@@ -1,0 +1,45 @@
+<html>
+<head>
+    <title>Foto kart galerisi</title>
+</head>
+<body>
+<header>
+<h1>foto galeri</h1>
+<button id="logoutBtn">çıkış</button>
+</header>
+<section>
+<h5>giriş</h5>
+<form id="loginForm">
+    <input name="username" placeholder="u name yaz" required>
+    <input name="password" placeholder="şifre" required>
+    <button>giriş yap</button>
+</form>
+<div id="loginMsg"> </div>
+</section>
+
+<section>
+<h5>foto yükle</h5>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <div>
+            <input name="title" placeholder="başlık yazınız" required>
+        </div>
+        <div>
+            <input name="file" type="file" accept="image/*" required>
+        </div>
+        <div>
+            <button>Yükle</button>
+        </div>
+    </form>
+    <div> yüklemek için giriş yapmış olman gerekiyor...</div>
+</section>
+<section>
+    <h5>galeri</h5>
+    <div id="grid"></div>
+    <div id="empty">henüz foto yok...</div>
+</section>
+
+
+
+
+</body>
+</html>
