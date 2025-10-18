@@ -1,0 +1,4 @@
+POST /api/photos
+GET /api/photos
+GET /uploads/<filename>
+
