@@ -5,7 +5,11 @@
 <body>
 <header>
 <h1>foto galeri</h1>
-<button id="logoutBtn">çıkış</button>
+    {% if user %}
+    <form action="{{url_for('auth.logout')}}" method="post">
+        <button id="logoutBtn">çıkış</button>
+    </form>
+    {% endif %}
 </header>
 <section>
 <h5>giriş</h5>
