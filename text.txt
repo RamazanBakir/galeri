@@ -1,0 +1,67 @@
+YZ = VERİ + ALGORTIMA/MODEL + HEDEF/ÖLÇÜM
+algıla -> düşün -> hareket et (feedback) öğren
+
+search algortimaları
+
+
+örnek : ev m2, oda sayısı -> fiyat tahmin
+
+input (x) : bildiğiniz özellikler (m2, oda,mahallesi)
+output(y): tahmin etmek istediğiniz şey (fiyat)
+
+tür :
+- regresyon : sayı tahmini (fiyat)
+- sınıflandırma : label tahmini (kedi/köpek)
+- kümeleme : etketsiz gruplama (müşteri segmenti)
+
+
+1 -> ml problemini tanımlama
+2 -> veri topla & temizleme (data pipeline kalbi)
+3 -> veriyi böl  (verinin %70-%80 eğitim kalanı da test için)
+5 -> modelini kur
+
+-----
+supervised learning - denetimli öğrenme -> cevabı bilinen örneklerle öğretmek
+
+veriyi topla
+temizle/şekillendir
+böl
+model seç -> (regresyon, logistic reg. randomforest)
+eğit/ölç -> F1, MAE/RMSE
+dikkat : overfitting
+
+unsupervised learning - denetimsiz -> cevap yok, benzerleri grupla, yapıyı keşfet
+clustering yapmak veya boyutunu küçültmek (PCA)
+
+veriyi hazırla
+yöntem seç (gruplama : k-means, dbscan, boyut indirgeme: PCA)
+kaç grup var
+yorumlama
+
+
+sayı tahmini -> regression -> bir değeri tahmin eder
+sınıf tahmini -> classification -> hangisine ait olduğunu tahmin etmek
+
+
+1-) veri yükle -> csv ->dataframe
+2-) veri temizleme
+3-) özellik/target
+4-) veriyi ayır
+5-)model kur + train
+6-) değerlendirme -> accuracy/f1/mae vs.
+7-) modeli kaydetme (.joblib)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
