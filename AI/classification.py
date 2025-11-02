@@ -192,7 +192,18 @@ prec.. 1.0
 rec.. 0.7692307692307693
 f1.. 0.8695652173913044
 renkli confusion matrix heatmap oluşturalım
+
+           train error   test error
+underfit : yüksek        yüksek -> öğrenmemiş 
+good fit : düşük         düşük  -> tam kararında 
+overfit :  çok düşük     yüksek -> ezberlemiş
+
+
 """
+
+
+
+
 
 
 
