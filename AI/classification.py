@@ -159,6 +159,25 @@ model.fit(X_train,y_train)
 
 y_pred = model.predict(X_test)
 
+etiketler = ["kedi","kopek"]
+cm = confusion_matrix(y_test,y_pred,labels=etiketler)
+
+fig,ax = plt.subplots(figsize=(6,5),dpi=120)
+im = ax.imshow(cm)
+
+cbar = fig.colorbar(im,ax=ax)
+cbar.set_label("adet")
+
+ax.set_title("confusion matrix vs vs")
+ax.set_xlabel("tahmin")
+ax.set_ylabel("gerçek")
+
+for i in range(cm.shape[0]):
+    for j in range(cm.shape[1]):
+        ax.text(j,i, cm[i,j],
+                ha="center",va="center",color="white"
+                )
+plt.show()
 print("gerçek",list(y_test))
 print("tahmin",list(y_pred))
 print("confusion matrix:", confusion_matrix(y_test,y_pred))
