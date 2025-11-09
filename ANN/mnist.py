@@ -69,9 +69,12 @@ print("-"*50,"test","-"*50)
 test_loss, test_acc = model.evaluate(x_test,y_test,verbose=0)
 print(f"test loss : {test_loss:.4f} | test acc {test_acc:.4f} ")
 
-
-
-
+print("-"*50,"örnek tahminler","-"*50)
+probs = model.predict(x_test[:5])
+preds = probs.argmax(axis=1)
+print("gerçek etiketler", y_test[:5])
+print("tahmin sınıfları",preds)
+print("ilk örneğin olasılıkları :",np.round(probs[0],3))
 
 
 
