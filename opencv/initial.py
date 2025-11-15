@@ -367,7 +367,7 @@ else:
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-"""
+
 
 cap = cv2.VideoCapture(0)
 
@@ -403,11 +403,62 @@ else:
 
     cap.release()
     cv2.destroyAllWindows()
+    
+cv2.moments() #beyaz bölgenin ortasını bul
+
+"""
 
 
 
+cap = cv2.VideoCapture(0)
 
+if not cap.isOpened():
+    print("kamera açılmadı")
+else:
+    while True:
+        ret,frame = cap.read()
+        if not ret:
+            print("kareyi okuyamadım")
+            break
 
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+        lower_red1 = np.array([0,120,70]) #[H,S,V]
+        upper_red1 = np.array([10,255,255])
+
+        lower_red2 = np.array([170,120,70]) #[H,S,V]
+        upper_red2 = np.array([180,255,255])
+
+        mask1 = cv2.inRange(hsv, lower_red1,upper_red1)
+        mask2 = cv2.inRange(hsv, lower_red2,upper_red2)
+        mask = mask1 | mask2
+        mask = cv2.GaussianBlur(mask, (7,7),0)
+
+        cont, _ = cv2.findContours(mask,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        if len(cont) > 0:
+            c = max(cont,key=cv2.contourArea) #en büyük kont. bulmak
+
+            area = cv2.contourArea(c)
+            if area > 500:
+                M = cv2.moments(c)
+                if M["m00"] != 0:
+                    cx = int(M["m10"] / M["m00"]) #X merkezi
+                    cy = int(M["m01"] / M["m00"]) #Y merkezi
+
+                    cv2.circle(frame, (cx,cy), 10,(0,255,0),-1)
+
+                    x,y,w,h = cv2.boundingRect(c)
+                    cv2.rectangle(frame,(x,y),(x+w,y+h), (255,0,0),2)
+
+                    cv2.putText(frame,f"konum: ({cx}, {cy})",(10,30),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),2)
+        cv2.imshow("orj",frame)
+        cv2.imshow("mask",mask)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+cap.release()
+cv2.destroyAllWindows()
 
 
 
