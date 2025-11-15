@@ -131,7 +131,7 @@ else:
     cv2.destroyAllWindows()
 parca = img[y1:y2, x1:x2]
 sıra [Y,X] -> [satır,sütun] -> [yükseklik, genişlik]
-"""
+
 
 img = cv2.imread("karpuz2.jpg")
 if img is None:
@@ -157,8 +157,55 @@ else:
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
+3 temel çizim fonks: 
+cv2.line -> çizgi
+cv2.rectangle -> dikdörtgen
+cv2.circle -> daire
+renkler : bgr
+örn: 
+BGR(BLUE,GREEN,RED)
+(255,0,0)
+(0,255,0)
+(0,0,255)
 
+cv2.line(img,(x1,y1), (x2,y2), (B,G,R), kalinlik)
+cv2.rectange(img,(x1,y1), (x2,y2), (B,G,R), kalinlik)
+cv2.circle(img,(merkez_X,merkez_Y),yaricap, (B,G,R), kalinlik)
 
+cv2.putText(
+    draw_img,
+    "yazi yaz",
+    (x,y),
+    font,
+    font_scale,
+    (B,G,R),
+    kalinlik,
+    lineType
+)
+
+"""
+
+img = cv2.imread("karpuz2.jpg")
+draw_img = img.copy()
+cv2.line(draw_img,(50,50),(300,50),(0,0,255),3)
+cv2.rectangle(draw_img,(100,100),(300,300),(0,255,0),2)
+cv2.circle(draw_img, (200,200),50,(255,0,0),3)
+
+text_img = img.copy()
+cv2.putText(
+    text_img,
+    "hello class",
+    (50,50),
+    cv2.FONT_HERSHEY_SIMPLEX,
+    1.0,
+    (0,255,255),
+    2,
+    cv2.LINE_AA
+)
+cv2.imshow("çizgi çizilen",draw_img)
+cv2.imshow("text yazılan",text_img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 
 
