@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 """
 cv2.imread("resim.jpg") #resim okur
 cv2.imshow(...) #resmi gösterir
@@ -264,7 +265,7 @@ faces = face.detectMultiScale(
     minNeighbors=5,
     minSize=(30,30)
 )
-"""
+
 
 face = cv2.CascadeClassifier(cv2.data.haarcascades +"haarcascade_frontalface_default.xml")
 eye = cv2.CascadeClassifier(cv2.data.haarcascades +"haarcascade_eye.xml")
@@ -321,4 +322,72 @@ else:
             break
     cap.release()
     cv2.destroyAllWindows()
+RGB : RED, GREEN, BLUE
+opencv de şöyle:  BGR -> BLUE,GREEN,RED -> (10,200,50)
+
+HSV (Hue, Saturation, Value)
+Hue : ana renk : 0-180 arasında (opencv) 0:kırmıza, 60:sarı, 120:yeşil, 180: mavi tonlarına gider
+Saturation: rengin doygunluğu (soluk/canlı)
+Value: parlaklık (karanlık mı / aydınlık mı)
+
+resmi frame vs. oku (bgr formatında gelir)
+cvtColor ile : BGR -> HSV çevir
+lower ve upper değeri belirle
+inRange le maske oluştur
+bu maske ile sadece o rengi göster (bitwise_and)
+"""
+img = cv2.imread("karpuz.jpeg")
+
+if img is None:
+    print("resim yok")
+else:
+    #BGR->HSV'ye çevir.
+    hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+
+    lower_red = np.array([0,120,70]) #[H,S,V]
+    upper_red = np.array([10,255,255])
+
+    lower_red1 = np.array([0,120,70]) #[H,S,V]
+    upper_red1 = np.array([10,255,255])
+
+    lower_red2 = np.array([170,120,70]) #[H,S,V]
+    upper_red2 = np.array([180,255,255])
+    mask1 = cv2.inRange(hsv, lower_red1,upper_red1)
+    mask2 = cv2.inRange(hsv, lower_red2,upper_red2)
+    mask = mask1 | mask2
+
+    #bu aralıktaki pikselleri 1, diğerlerini 0 yap
+    #mask = cv2.inRange(hsv, lower_red,upper_red)
+    #mask ile sadece kırmızı olanları göster
+    result = cv2.bitwise_and(img,img,mask=mask)
+
+    cv2.imshow("orjin",img)
+    cv2.imshow("maske(siyah-beyaz)",mask)
+    cv2.imshow("sadece kırmızı", result)
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
