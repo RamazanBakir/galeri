@@ -76,7 +76,8 @@ print("gerçek etiketler", y_test[:5])
 print("tahmin sınıfları",preds)
 print("ilk örneğin olasılıkları :",np.round(probs[0],3))
 
-
+layers.Dense(128, activation="relu"),
+layers.BatchNormalization()
 
 
 
