@@ -111,6 +111,38 @@ cv2.imshow("karpuz kontorrr",img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 """
+img = cv2.imread("karpuz2.jpg")
+if img is None:
+    print("resim yok")
+else:
+    print("orj. boyut",img.shape) #yükseklik,genişlik,kanal
+
+    h,w = img.shape[:2]
+
+    new_w = w // 2
+    new_h = h // 2
+    resized = cv2.resize(img,(new_w,new_h))
+    print("yeni boyut",resized.shape)
+
+    cv2.imshow("orj.",img)
+    cv2.imshow("resized",resized)
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
