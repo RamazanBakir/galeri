@@ -110,7 +110,7 @@ cv2.drawContours(img,[approx],-1,(0,255,0),2)
 cv2.imshow("karpuz kontorrr",img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-"""
+
 img = cv2.imread("karpuz2.jpg")
 if img is None:
     print("resim yok")
@@ -129,7 +129,33 @@ else:
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+parca = img[y1:y2, x1:x2]
+sıra [Y,X] -> [satır,sütun] -> [yükseklik, genişlik]
+"""
 
+img = cv2.imread("karpuz2.jpg")
+if img is None:
+    print("resim yok")
+else:
+    h,w = img.shape[:2]
+    print("boyut", h, w)
+
+    #merkezin etrafında 200x200lük kare alalım
+    box_size = 200
+    center_y = h //2
+    center_x = h // 2
+
+    y1= center_y - box_size // 2
+    y2 = center_y + box_size // 2
+    x1 = center_x - box_size // 2
+    x2 = center_x + box_size // 2
+
+    crop = img[y1:y2, x1:x2]
+    cv2.imshow("orj",img)
+    cv2.imshow("crop",crop)
+    #yukarıdan aşağıya soldan sağa gibi düşünelim
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 
 
