@@ -67,7 +67,52 @@ cv2.imshow("kenarlar blur",edges2)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+img = cv2.imread("karpuz2.jpg")
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #gri yaptık
+_, thresh = cv2.threshold(gray, 127,255,cv2.THRESH_BINARY) #threshold
+contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) #kontur bul
+cv2.drawContours(img, contours, -1, (0,255,0),2)
+
+cv2.imshow("kontur",img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+area = cv2.contourArea(contours) #alanını bul
+big = max(contours,key=cv2.contourArea()) #en büyük nesneyi bul...
+M = cv2.moments(contours)
+cx = int(M["m10"]/M["m00"])
+cy = int(M["m01"]/M["m00"])
+
+cv2.circle(img,(cx,cy),5,(0,0,255),-1)
+
+img = cv2.imread("karpuz2.jpg")
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #gri yaptık
+_, thresh = cv2.threshold(gray, 127,255,cv2.THRESH_BINARY) #threshold
+contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) #kontur bul
+cnt = contours[0]
+peri = cv2.arcLength(cnt,True)
+epsilon = 0.02 * peri
+
+approx = cv2.approxPolyDP(cnt,epsilon,True)
+
+
+print(len(contours))
+big_cnt = max(contours, key = cv2.contourArea)
+print("en büyük kontur alanı",cv2.contourArea(big_cnt))
+
+peri = cv2.arcLength(big_cnt,True) #çevre
+for f in [0.001, 0.005, 0.01, 0.02]:
+    epsilon = f * peri
+    approx = cv2.approxPolyDP(big_cnt,epsilon,True)
+    print(f,"köşe sayısı", len(approx))
+cv2.drawContours(img,[approx],-1,(0,255,0),2)
+cv2.imshow("karpuz kontorrr",img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 """
+
+
 
 
 
