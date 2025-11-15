@@ -183,8 +183,6 @@ cv2.putText(
     lineType
 )
 
-"""
-
 img = cv2.imread("karpuz2.jpg")
 draw_img = img.copy()
 cv2.line(draw_img,(50,50),(300,50),(0,0,255),3)
@@ -207,19 +205,96 @@ cv2.imshow("text yazılan",text_img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
+#webcam ile gerçek zamanlı görüntü işleme...
+
+
+face = cv2.CascadeClassifier(cv2.data.haarcascades +"haarcascade_frontalface_default.xml")
+
+img = cv2.imread("pep.png")
+gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+faces = face.detectMultiScale(gray,1.3,5)
+
+for (x,y,w,h) in faces:
+    cv2.rectangle(img,(x,y),(x+w,y+h), (0,255,0),2)
+
+cv2.imshow("sonuc",img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+print(cv2.data.haarcascades)
+
+cap = cv2.VideoCapture(0) #0 : varsayılan kamera
+
+if not cap.isOpened():
+    print("kamera açılmadı")
+else:
+    print("kamera açıldı...")
+    while True:
+        ret, frame = cap.read()
+
+        if not ret:
+            print("kare okunamadı, çıkılıyor...")
+            break
+
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        blurred = cv2.GaussianBlur(gray,(5,5),0)
+
+        edges = cv2.Canny(blurred,50,150)
+
+        cv2.imshow("kamera",frame)
+        cv2.imshow("gri",gray)
+        cv2.imshow("edges",edges)
 
 
 
+        #q tuşuna basılırsa çık
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+    cap.release()
+    cv2.destroyAllWindows()
+(x,y,w,h) -> şu bölgede yüz var...
+face recognition -> yüz kime ait ?
+çıktı : etiket var. 
 
+faces = face.detectMultiScale(
+    gray,
+    scaleFactor=1.1,
+    minNeighbors=5,
+    minSize=(30,30)
+)
+"""
 
+face = cv2.CascadeClassifier(cv2.data.haarcascades +"haarcascade_frontalface_default.xml")
 
+#img = cv2.imread("pep.png")
+cap = cv2.VideoCapture(0)
+if not cap.isOpened():
+    print("kamera açılmadı")
+else:
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            print("kareyi bulamadım")
+            break
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        faces = face.detectMultiScale(gray, 1.1, 5,minSize=(100,100))
+        for (x, y, w, h) in faces:
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-
-
-
-
-
-
-
-
+        cv2.putText(
+            frame,
+            f"yüz sayısı: {len((faces))}",
+            (10,30),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            1.0,
+            (0,255,0),
+            2
+        )
+        cv2.imshow("sonuc", frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+    cap.release()
+    cv2.destroyAllWindows()
 
