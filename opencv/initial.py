@@ -267,6 +267,7 @@ faces = face.detectMultiScale(
 """
 
 face = cv2.CascadeClassifier(cv2.data.haarcascades +"haarcascade_frontalface_default.xml")
+eye = cv2.CascadeClassifier(cv2.data.haarcascades +"haarcascade_eye.xml")
 
 #img = cv2.imread("pep.png")
 cap = cv2.VideoCapture(0)
@@ -282,6 +283,12 @@ else:
         faces = face.detectMultiScale(gray, 1.1, 5,minSize=(100,100))
         for (x, y, w, h) in faces:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            roi_gray = gray[y:y+h, x:x+w] #gri yüz bölgesi
+            roi_color = frame[y:y+h,x:x+w] #renkli yüz bölgesi
+
+            eyes = eye.detectMultiScale(roi_gray,1.1,5,minSize=(20,20))
+            for  (ex,ey,ew,eh) in eyes:
+                cv2.rectangle(roi_color,(ex,ey), (ex + ew, ey + eh), (255,0,0),2)
 
         cv2.putText(
             frame,
