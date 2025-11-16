@@ -1,7 +1,12 @@
 import cv2
 import numpy as np
 #roi bölgesi : region of interest
-
+"""
+            cv2.rectangle(frame,
+                          (roi_x1 + x, roi_y1 + y),
+                          (roi_x1 + x + w, roi_y1 + y + h),
+                          (0,255,0),2)
+"""
 cap = cv2.VideoCapture(0)
 
 while True:
@@ -50,12 +55,15 @@ while True:
         area = cv2.contourArea(c)
 
         if area > 1000:
-            x,y,w,h = cv2.boundingRect(c)
+            cv2.drawContours(roi,[c],-1,(0,255,0),2)
 
-            cv2.rectangle(frame,
-                          (roi_x1 + x, roi_y1 + y),
-                          (roi_x1 + x + w, roi_y1 + y + h),
-                          (0,255,0),2)
+            #convex hull hesaplama
+            hull = cv2.convexHull(c)
+            cv2.drawContours(roi,[hull],-1,(0,0,255),3)
+
+            #x,y,w,h = cv2.boundingRect(c)
+            cv2.rectangle(frame,(roi_x1,roi_y1),(roi_x2,roi_y2), (255,0,0),2)
+
             cv2.putText(frame,"EL", (roi_x1,roi_y1 - 10), cv2.FONT_HERSHEY_SIMPLEX,0.8,(0,255,0), 4)
 
     cv2.rectangle(frame,(roi_x1,roi_y1),(roi_x2,roi_y2),(255,0,0),2)
