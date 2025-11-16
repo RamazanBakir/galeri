@@ -44,7 +44,7 @@ while True:
         crop = frame1[y1:y2, x1:x2]
         now = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
         filename = os.path.join(save_dir, f"motion_{now}.jpg")
-        cv2.imwrite(filename, crop)
+        #cv2.imwrite(filename, crop)
         print("kesilen hareket kaydedildi...", filename)
 
         cv2.rectangle(frame1,(x,y), (x+w, y+h), (0,0,255),2)
