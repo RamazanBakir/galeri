@@ -40,7 +40,7 @@ while True:
         c = max(contours,key=cv2.contourArea)
         area = cv2.contourArea(c)
 
-        if area > 1000:
+        if area > 4000:
             cv2.drawContours(roi,[c],-1,(0,255,0),2)
 
             hull = cv2.convexHull(c,returnPoints=False)
