@@ -406,10 +406,6 @@ else:
     
 cv2.moments() #beyaz bölgenin ortasını bul
 
-"""
-
-
-
 cap = cv2.VideoCapture(0)
 
 if not cap.isOpened():
@@ -459,6 +455,77 @@ else:
             break
 cap.release()
 cv2.destroyAllWindows()
+
+bit bit işleme : bitwise
+bir resim -> matris
+maske -> siyah-beyaz bir matris
+bitwise işlemleri -> maskeye göre resmi kes,birleştir,gizle,göster
+
+bitwise_and : sadece ortak olan yerleri göster
+kural :
+beyaz (255) : göster
+siyah(0) : gösterme
+
+[renk |renk | renk |renk]
+[0 | 255 |255 | 0]
+
+bitwise_and(frame,frame,mask=mask)
+bitwise_or : birleştir, hangisi beyazsa beyaz say
+0-10(kırmızı)
+160-180(kırmızı)
+
+full_mask = cv2.bitwise_or(mask1,mask2)
+
+0 OR 0 = 0 (SİYAH)
+0 OR 255 = 255 (BEYAZ)
+255 OR 255 = 255(BEYAZ)
+255 OR 0 = 255 (BEYAZ)
+
+bitwise_not: tersine çevir
+0 -> 255 
+255 -> 0
+inv = cv2.bitwise_not(mask)
+
+bitwise_xor : farklı olan yerleri göster
+
+0 XOR 0 = 0 (SİYAH)
+0 XOR 255 = 255 (BEYAZ)
+255 XOR 255 = 0(SİYAH)
+255 XOR 0 = 255 (BEYAZ)
+
+AYNI OLAN YER -> GİZLE
+FARKLI OLAN YER -> GÖSTER
+
+
+
+mask1 = np.array([
+    [0,255,255,0],
+    [0,255,0,255],
+    [255,255,0,0],
+    [0,0,0,0]
+], dtype=np.uint8)
+
+mask2 = np.array([
+    [255,0,0,0],
+    [0,0,255,0],
+    [255,0,0,255],
+    [255,0,0,0]
+], dtype=np.uint8)
+
+print("AND:", cv2.bitwise_and(mask1,mask2))
+print("OR:", cv2.bitwise_or(mask1,mask2))
+print("XOR:", cv2.bitwise_xor(mask1,mask2))
+print("not mask1:", cv2.bitwise_not(mask1))
+"""
+
+
+
+
+
+
+
+
+
 
 
 
