@@ -55,6 +55,9 @@ while True:
         filename = os.path.join(save_dir,f"motion_{now}.jpg")
         cv2.imwrite(filename,frame1)
         print("hareket kaydedildi...",filename)
+        
+        
+görüntü -> gri -> threshold -> kontur bul -> alan/şekil vs. çıkar
     """
 
     cv2.imshow("hareket algılama",frame1)
@@ -69,3 +72,5 @@ while True:
         break
 cap.release()
 cv2.destroyAllWindows()
+
+
