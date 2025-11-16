@@ -516,7 +516,59 @@ print("AND:", cv2.bitwise_and(mask1,mask2))
 print("OR:", cv2.bitwise_or(mask1,mask2))
 print("XOR:", cv2.bitwise_xor(mask1,mask2))
 print("not mask1:", cv2.bitwise_not(mask1))
+#erode, dilate
+erode: maskenin beyaz bölgelerini küçültür.kenardaki küçük parazitleri yok edebiliriz.
+dilate : maskelerin beyaz bölgelerini büyütür.
+ikisini birlikte kullanınca Open/Closing denir.
 """
+
+cap = cv2.VideoCapture(0)
+if not cap.isOpened():
+    print("kamera açılmadı")
+else:
+    while True:
+        ret,frame = cap.read()
+        if not ret:
+            print("kare bulamadım")
+            break
+        #frame -> HSV
+        hsv = cv2.cvtColor(frame,cv2.COLOR_BGR2HSV)
+        lower_red1 = np.array([0,120,70])
+        upper_red1 = np.array([10,255,255])
+
+        lower_red2 = np.array([160, 120, 70])
+        upper_red2 = np.array([180, 255, 255])
+
+        mask1 = cv2.inRange(hsv, lower_red1,upper_red1)
+        mask2 = cv2.inRange(hsv, lower_red2,upper_red2)
+        #birleştirme
+        mask = cv2.bitwise_or(mask1,mask2)
+        mask = cv2.erode(mask,None,iterations=2)
+        mask = cv2.dilate(mask,None,iterations=2)
+
+        contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        if len(contours) > 0:
+            cnt = max(contours,key=cv2.contourArea)
+            area = cv2.contourArea(cnt)
+
+            if area>500:
+                x,y,w,h = cv2.boundingRect(cnt)
+                cv2.rectangle(frame,(x,y), (x+w,y+h),(0,255,0),2)
+
+                cx = x + w // 2
+                cy = y + h // 2
+                cv2.circle(frame,(cx,cy),5,(255,0,0),-1)
+
+                cv2.putText(frame, f"X: {cx} Y: {cy}", (x,y-10),cv2.FONT_HERSHEY_SIMPLEX,0.7,(0,255,0),2)
+
+        cv2.imshow("orj",frame)
+        cv2.imshow("mask",mask)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+cap.release()
+cv2.destroyAllWindows()
 
 
 
